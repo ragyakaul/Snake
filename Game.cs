@@ -10,6 +10,7 @@ using SFML.Window;
         private RenderWindow window;
         private VideoMode mode = new VideoMode(WIDTH, HEIGHT);
         private Player player = new Player();
+        private Background background = new Background();
 
         
         public Game()
@@ -38,15 +39,16 @@ using SFML.Window;
             private void update()
             {
                 player.Process();
+                Console.WriteLine((int)player.position.X);
+                Console.WriteLine((int)player.position.Y);
+                background.SetSquareToUsed((int)player.position.X, (int)player.position.Y);
             }
 
             private void draw()
             {
                 this.window.Clear(Color.Blue);
+                background.Render(ref this.window);
                 player.Render(ref this.window);
-                //this.window.Draw(rect);
                 this.window.Display();
-                
             }
-
         }

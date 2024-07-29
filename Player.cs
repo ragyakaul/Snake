@@ -5,13 +5,13 @@ using SFML.Window;
 class Player 
 {
     private const float PLAYER_SPEED = 10f;
-    private Vector2f position; 
+    public Vector2f position; // How can we directly use rect.Position in this problem? 
     private RectangleShape rect; 
     
     public Player()
     {
-        position = new Vector2f(320, 240);
         rect = new RectangleShape();
+        position = new Vector2f(320, 240);
         this.rect.Size = new Vector2f(10, 10);
     }
     public void HandleUserInput()
@@ -25,7 +25,7 @@ class Player
 
         if(isMove)
         {
-            if(moveLeft) position.X -= PLAYER_SPEED;
+            if(moveLeft) position.X -= PLAYER_SPEED; // Cannot modify return value of transformable position error when we try to do it directly
             if(moveRight) position.X  += PLAYER_SPEED;
             if(moveUp) position.Y -= PLAYER_SPEED;
             if(moveDown) position.Y += PLAYER_SPEED;
@@ -36,6 +36,8 @@ class Player
     {
         this.rect.Position = position;
     }
+
+
 
     public void Render(ref RenderWindow window)
     {   
