@@ -12,9 +12,8 @@ using SFML.System;
         private RenderWindow window;
         //private VideoMode mode = new VideoMode(WIDTH, HEIGHT);
         private Player player;
-        private Background background;
-                
-
+        private Background background;         
+        private int scoreCounter;
         // More explanation on why we split the declaration & initialization
         public Game()
         {
@@ -23,7 +22,7 @@ using SFML.System;
             this.player = new Player();
             this.background = new Background();
             window.Closed += (sender, args) => window.Close();
-            this.window.SetFramerateLimit(1);
+            this.window.SetFramerateLimit(40);
             //this.endgame();
             //this.background.SetSquareToUsed((int)player.position.X, (int)player.position.Y);
         }
@@ -54,6 +53,7 @@ using SFML.System;
                     window.Close();
                 }
                 background.SetSquareToUsed((int)newPosition.X, (int)newPosition.Y);
+                scoreCounter++;
             }
 
             private void draw()
@@ -61,6 +61,7 @@ using SFML.System;
                 this.window.Clear(Color.Blue);
                 background.Render(ref this.window);
                 player.Render(ref this.window);
+                Console.WriteLine($"Score: {scoreCounter}");
                 this.window.Display();
             } 
         }

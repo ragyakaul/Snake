@@ -39,7 +39,6 @@ class Background
 
     public void SetSquareToUsed(int col, int row)
     {
-        Console.WriteLine($"from visited: {new Vector2f(col, row)}");
         arrOfRects[col/10, row/10].FillColor = Color.Red; 
         if (!visited.Contains(new Vector2f(col, row)))
         {
