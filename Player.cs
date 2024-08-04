@@ -1,41 +1,80 @@
 using SFML.System;
 using SFML.Graphics;
 using SFML.Window;
+using System.Security.Cryptography.X509Certificates;
+//using System.Windows.Forms;
 
 class Player 
 {
     private const float PLAYER_SPEED = 10f;
-    public Vector2f position; // How can we directly use rect.Position in this problem? 
     private RectangleShape rect; 
+    private int curDirection; //use enums as well
+
+    
     
     public Player()
     {
         rect = new RectangleShape();
-        position = new Vector2f(320, 240);
+        curDirection = 0;
+        this.rect.Position = new Vector2f(320, 240);
         this.rect.Size = new Vector2f(10, 10);
     }
+
+    public Vector2f GetPoint()
+    {
+        return this.rect.Position;
+    }
+
     public void HandleUserInput()
     {
-        bool moveLeft = Keyboard.IsKeyPressed(Keyboard.Key.Left);
-        bool moveRight = Keyboard.IsKeyPressed(Keyboard.Key.Right);
-        bool moveUp = Keyboard.IsKeyPressed(Keyboard.Key.Up);
-        bool moveDown = Keyboard.IsKeyPressed(Keyboard.Key.Down);
-
-        bool  isMove = moveLeft || moveRight || moveUp || moveDown;
-
-        if(isMove)
+        if(Keyboard.IsKeyPressed(Keyboard.Key.Left))
         {
-            if(moveLeft) position.X -= PLAYER_SPEED; // Cannot modify return value of transformable position error when we try to do it directly
-            if(moveRight) position.X  += PLAYER_SPEED;
-            if(moveUp) position.Y -= PLAYER_SPEED;
-            if(moveDown) position.Y += PLAYER_SPEED;
-        }    
+            curDirection = 0;
+        }
+        else if(Keyboard.IsKeyPressed(Keyboard.Key.Right))
+        {
+            curDirection = 1;
+        }
+        else if(Keyboard.IsKeyPressed(Keyboard.Key.Up))
+        {
+            curDirection = 2;
+        }
+        else if(Keyboard.IsKeyPressed(Keyboard.Key.Down))
+        {
+            curDirection = 3;
+        }
     }
 
-    public void Process()
+    public void UpdatePosition()
     {
-        this.rect.Position = position;
+        Vector2f newPosition = this.rect.Position; // calls getter & assigns it to newPosition
+        switch(curDirection)
+        {
+            case 0:
+            {
+                newPosition.X -= PLAYER_SPEED;
+                break;
+            }
+            case 1:
+            {
+                newPosition.X  += PLAYER_SPEED;
+                break;
+            }
+            case 2:
+            {
+                newPosition.Y -= PLAYER_SPEED;
+                break;
+            }
+            case 3:
+            {
+                newPosition.Y  += PLAYER_SPEED;
+                break;
+            }
+        }
+        this.rect.Position = newPosition; // calling the setter
     }
+
+    
 
 
 
